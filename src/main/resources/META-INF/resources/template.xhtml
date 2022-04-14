@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en-us"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+    <title>MES-CoBraD</title>
+    <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+    <h:outputStylesheet library="css" name="jsfcrud.css"/>
+</h:head>
+
+<h:body>
+    <pe:layout fullPage="true" widgetVar="layoutVar">
+        <pe:layoutPane  id="north-pnl" position="north" styleClassContent="north-pnl" size="45" closable="false"  collapsible="true" resizable="true" collapseSize="0" gutter="1">
+<!--    <div class="card">-->
+        <h:form>
+            <p:growl>
+                <p:autoUpdate/>
+            </p:growl>
+            <div class="header">
+                <h:form>
+                    <p:growl id="messages" showDetail="true"/>
+
+                    <p:toolbar>
+                        <p:toolbarGroup>
+                            <p:commandButton type="button" value="Repository" icon="pi pi-file" styleClass="p-mr-2" />
+                            <i class="pi pi-bars p-px-2"/>
+                            <p:commandButton type="button" value="Catalog" icon="pi pi-folder-open" styleClass="ui-button-success" />
+
+                        </p:toolbarGroup>
+                    </p:toolbar>
+                </h:form>
+            </div>
+        </h:form>
+<!--    </div>-->
+    </pe:layoutPane>
+
+        <pe:layoutPane id="center-pnl" position="center"  styleClassContent="center-pnl" closable="false" resizable="true" >
+            <ui:insert name="content-center"/>
+        </pe:layoutPane>
+
+        <pe:layoutPane id="left-pnl" position="east" styleClassContent="left-pnl"  size="200" closable="false" resizable="false">
+<!--            <ui:insert name="content-left"/>-->
+            <h:form>
+            <p:panelMenu style="width:200px">
+                <p:submenu label="Navigations">
+
+                    <p:menuitem style="font-weight: bold"
+                                value="Dashboard" id="dashboard"
+                                icon="fa fa-star"
+                                rendered="#{dashboardController.isRendered('DashboardAll')}"
+                                outcome="/pages/dashboard.xhtml"
+
+
+                    />
+                    <p:menuitem style="font-weight: bold;display: flex;"
+                                value="Repository" id="events"
+
+                                icon="fa fa-star"
+                                rendered="#{dashboardController.isRendered('DashboardSerttings')}"
+                                outcome="/pages/pluginrepository.xhtml"
+                    />
+                    <p:menuitem style="font-weight: bold;display: flex;"
+                                value="Catalog" id="usersdata"
+
+                                icon="fa fa-star"
+                                rendered="#{dashboardController.isRendered('DashboardSerttings')}"
+                                outcome="/pages/plugincatalog.xhtml"
+                    />
+                </p:submenu>
+                <p:submenu label="Options">
+                    <p:menuitem style="font-weight: bold;display: flex;"
+                                value="Settings" id="auditsettings"
+
+                                icon="fa fa-star"
+                                rendered="#{dashboardController.isRendered('DashboardSerttings')}"
+                                outcome="/pages/pluginsettings.xhtml"
+                    />
+
+                    <p:menuitem value="Website" url="http://www.primefaces.org" icon="pi pi-external-link"/>
+                    <p:menuitem value="Help" outcome="/pages/pluginsettings.xhtml" icon="pi pi-upload"/>
+                </p:submenu>
+
+            </p:panelMenu>
+            </h:form>
+        </pe:layoutPane>
+
+    <pe:layoutPane id="south-pnl" position="south" size="45" closable="false" resizable="false">
+        <div class="footer">
+            MES-CoBraD
+            <h:outputText id="build-info" value="#{applicationBuildInfo.getVersion()} - #{applicationBuildInfo.getNumber()} - #{applicationBuildInfo.getTime()} | "/>
+            <h:outputLink styleClass="home-link" value="/auditapp/index.xhtml"><i class="pi pi-home"></i><span style="margin-left: 0.3%">Home</span></h:outputLink>
+        </div>
+    </pe:layoutPane>
+</pe:layout>
+</h:body>
+</html>

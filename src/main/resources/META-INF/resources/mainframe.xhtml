@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core"
+>
+
+
+<f:view locale="#{languageChange.locale}">
+    <h:head>
+        <title><ui:insert name="title">Default Title</ui:insert></title>
+        <link type="text/css" rel="stylesheet" href="resources/css/styles.css"/>
+        <link type="text/css" rel="stylesheet" href="resources/css/bootstrap.min.css"/>
+
+    </h:head>
+
+    <h:body>
+        <iframe src="#{autoRefreshController.emptyIframe}"
+                style="visibility: hidden;width: 0; height: 0; border: 0; border: none; position: absolute;"
+                frameborder="0"></iframe>
+
+        <script type="text/javascript">
+
+            function iframeLanguage(theUrl) {
+                var xmlHttp = new XMLHttpRequest();
+                xmlHttp.open("GET", theUrl, true);
+                xmlHttp.onload = () =>
+                {
+                    console.log(request.responseText)
+                }
+                xmlHttp.send();
+                location.reload();
+            }
+
+
+            function setActivMenu(elemento) {
+                //alert("TEst");
+                PF('ics2LeftMenu').menuitemLinks.each(function () {
+                    var menuItem = $(this);
+                    if (menuItem.hasClass(elemento)) {
+                        menuItem.addClass('active');
+                    } else {
+                        menuItem.removeClass('active');
+                    }
+                });
+            }
+
+        </script>
+
+        <p:growl id="growl" life="3000"/>
+        <h:form id="appForm">
+
+        <div class="blueUpperHolder">
+
+                </div>
+
+                <div class="menuLeft">
+
+                    <p:panelMenu id="ics2LeftMenu" widgetVar="ics2LeftMenu">
+                        <p:submenu id="dasboardMenu" label="#{msg['label.mainmenu.dasboard']}"
+                                   rendered="#{dashboardController.isRendered('DashboardAll') or dashboardController.isRendered('DashboardENS') or dashboardController.isRendered('DashboardPLACI') or dashboardController.isRendered('DashboardClosed')}"
+                        >
+                            <p:menuitem style="font-weight: bold;display: flex;"
+                                        value="#{msg['label.mainmenu.dasboard']}" id="dashboard"
+                                        icon="fa fa-star"
+                                        rendered="#{dashboardController.isRendered('DashboardAll')}"
+                                        outcome="/dashboard.xhtml"
+
+
+                            />
+                            <p:menuitem style="font-weight: bold;display: flex;"
+                                        value="#{msg['label.mainmenu.settings']}" id="dashboardSettings"
+
+                                        icon="fa fa-star"
+                                        rendered="#{dashboardController.isRendered('DashboardSerttings')}"
+                                        outcome="/auditsettings.xhtml"
+                            />
+                            <p:menuitem style="font-weight: bold;display: flex;"
+                                        value="#{msg['label.mainmenu.events']}" id="dashboardEvents"
+
+                                        icon="fa fa-star"
+                                        rendered="#{dashboardController.isRendered('dashboardEvents')}"
+                                        outcome="/eventdata.xhtml"
+                            />
+                            <p:menuitem style="font-weight: bold;display: flex;"
+                                        value="#{msg['label.mainmenu.users']}" id="dashboardUsers"
+
+                                        icon="fa fa-star"
+                                        rendered="#{dashboardController.isRendered('DashboardUsers')}"
+                                        outcome="/usersdata.xhtml"
+                            />
+                            <p:menuitem style="font-weight: bold;display: flex;"
+                                        value="     #{msg['label.mainmenu.data']}" id="dashboardData"
+
+                                        icon="fa fa-star"
+                                        rendered="#{dashboardController.isRendered('DashboardData')}"
+                                        outcome="/auditdata.xhtml"
+                            />
+
+                        </p:submenu>
+
+                    </p:panelMenu>
+
+                </div>
+
+        </h:form>
+
+    </h:body>
+</f:view>
+</html>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en-us"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="../template.xhtml">
+    <ui:define name="content-center">
+        <h2 style="text-align: center">Plugin Settings</h2>
+        <div class="row">
+        <div class="column-half" style="margin: 20px; background-color: #b2d5d6">
+            <h:form>
+                <h5 class="p-mt-0">Events</h5>
+                <h:panelGrid columns="3" cellpadding="7">
+                    <h:outputText value="Audit Type"/>
+                    <p:inputText id="firstname" value="#{settingsController.auditSetting.auditType}">
+                        <p:ajax event="keyup" update="display2" process="@this"/>
+                    </p:inputText>
+                    <h:outputText id="display2" value="#{settingsController.auditSetting.auditType}"/>
+
+                    <h:outputText value="Severity"/>
+                    <p:inputText id="middlename" value="#{settingsController.auditSetting.auditSeverity}">
+                        <p:ajax event="blur" update="display3"/>
+                    </p:inputText>
+                    <h:outputText id="display3" value="#{settingsController.auditSetting.auditSeverity}"/>
+
+                    <h:outputText value="Applications"/>
+                    <p:inputText id="lastname" value="#{settingsController.auditSetting.auditAppList}">
+                        <p:ajax event="input" update="display4"/>
+                    </p:inputText>
+                    <h:outputText id="display4" value="#{settingsController.auditSetting.auditAppList}"/>
+                </h:panelGrid>
+
+                <h5>Listener</h5>
+                <h:panelGrid columns="3" cellpadding="7">
+                    <h:outputText value="Events"/>
+                    <p:inputText id="counter" value="#{settingsController.auditSetting.auditEventsList}">
+                        <p:ajax event="keyup" update="display5" listener="#{basicView.handleKeyEvent}"/>
+                    </p:inputText>
+                    <h:outputText id="display5" value="#{settingsController.auditSetting.auditEventsList}"/>
+                </h:panelGrid>
+            </h:form>
+        </div>
+
+            <div class="column-half" style="margin: 20px; background-color: #b2d5d6">
+                <h:form>
+                    <h5 class="p-mt-0">User registered events</h5>
+                    <h:panelGrid columns="3" cellpadding="7">
+                        <h:outputText value="Login success"/>
+                        <p:inputText id="firstname1" value="#{settingsController.auditSetting.auditType}">
+                            <p:ajax event="keyup" update="display12" process="@this"/>
+                        </p:inputText>
+                        <h:outputText id="display12" value="#{settingsController.auditSetting.auditType}"/>
+
+                        <h:outputText value="Login refused"/>
+                        <p:inputText id="middlename1" value="#{settingsController.auditSetting.auditSeverity}">
+                            <p:ajax event="blur" update="display13"/>
+                        </p:inputText>
+                        <h:outputText id="display13" value="#{settingsController.auditSetting.auditSeverity}"/>
+
+                        <h:outputText value="Read data from"/>
+
+                        <p:selectCheckboxMenu id="multiple" value="#{checkboxView.selectedCities2}" label="Applications" style="min-width: 15rem"
+                                              multiple="true" filter="true" filterMatchMode="startsWith" panelStyle="width: 30rem" scrollHeight="250">
+                            <p:ajax event="itemUnselect" listener="#{checkboxView.onItemUnselect}"/>
+                            <f:selectItems value="#{checkboxView.cities}"/>
+                        </p:selectCheckboxMenu>
+
+                        <h:outputText id="display15" value="#{settingsController.auditSetting.auditSeverity}"/>
+                        <h:outputText value="Update data in"/>
+
+                        <p:selectCheckboxMenu id="multiple2" value="#{checkboxView.selectedCities2}" label="Modules" style="min-width: 15rem"
+                                              multiple="true" filter="true" filterMatchMode="startsWith" panelStyle="width: 30rem" scrollHeight="250">
+                            <p:ajax event="itemUnselect" listener="#{checkboxView.onItemUnselect}"/>
+                            <f:selectItems value="#{checkboxView.cities}"/>
+                        </p:selectCheckboxMenu>
+
+                    </h:panelGrid>
+
+                </h:form>
+                <h:form>
+                    <h:panelGrid columns="2" cellpadding="15">
+                <p:commandButton type="button" value="Save" />
+
+                <p:commandButton type="button" value="Cancel" styleClass="ui-button-secondary" style="alignment: right"/>
+                    </h:panelGrid>
+                </h:form>
+            </div>
+
+        </div>
+    </ui:define>
+</ui:composition>
+</html>
