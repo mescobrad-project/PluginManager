@@ -3,8 +3,6 @@
 Choose and leave only one of the following badge
 
 ![REPO-TYPE](https://img.shields.io/badge/repo--type-backend-critical?style=for-the-badge&logo=github)
-![REPO-TYPE](https://img.shields.io/badge/repo--type-frontend-green?style=for-the-badge&logo=github)
-![REPO-TYPE](https://img.shields.io/badge/repo--type-automation-9cf?style=for-the-badge&logo=github)
 
 
 One Paragraph of project description goes here.
