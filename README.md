@@ -12,10 +12,33 @@ More detailed infos here.
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+On a local machine, just get the jar file and execute it
+For example java -jar pluginmng-0.0.1-SNAPSHOT.jar
+
+If you want to use a specific profile, enter it in the command line
+For example to use the test profile, just use the command
+java -Dspring.profiles.active=test -jar pluginmng-0.0.1-SNAPSHOT.jar
+
+To build the docker image, follow the steps:
+1. Copy docker/Dockerfile in the root folder of the system.
+2. Be sure that under the root there is target/pluginmng-0.0.1-SNAPSHOT.jar
+3. Run the command docker build -t pluginmng . (be carefull to use dot at the end)
+4. Wait the image to be created.
+
+To run the docker image
+1. Run the docker command: docker run -d pluginmng
+2.
+
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+The project is developed as a microservice.
+It is developed on Java 11.
+The only thinh necessary to run application is the JVM 11 or newer
+You can run the application by calling:
+java <app.name.jar>
+The application is by default using port 6084
+There is also a docker file, which can be used to create a docker image.
 
 ```
 Give examples
@@ -24,21 +47,15 @@ Give examples
 ### Installing
 
 A step by step series of examples that tell you how to get a development env running
+To install on a standalone system (no docker) just copy the jar file in the choosend working directory.
+For example copy pluginmng-0.0.1-SNAPSHOT.jar in /tmp/ folder
 
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
+To build the docker image, follow the steps:
+1. Copy docker/Dockerfile in the root folder of the system.
+2. Be sure that under the root there is target/pluginmng-0.0.1-SNAPSHOT.jar
+3. Run the command docker build -t pluginmng . (be carefull to use dot at the end)
+4. Wait the image to be created.
+5. 
 ## Running the tests
 
 Explain how to run the automated tests for this system

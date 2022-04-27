@@ -48,10 +48,12 @@
         <p:separator style="width: 5px;"/>
         <div class="card">
             <h5>Single</h5>
-            <h:form enctype="multipart/form-data">
-                <p:fileUpload value="#{fileUploadView.file}" mode="simple" skinSimple="true"/>
+            <h:form>
+                <p:fileUpload listener="#{fileUploadController.upload}" mode="advanced" dragDropSupport="false"  sizeLimit="10000000"
+                              update="messages" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
 
-                <p:commandButton value="Submit" ajax="false" action="#{fileUploadView.upload}" styleClass="p-mt-3 ui-button-outlined p-d-block"/>
+                <p:growl id="messages" showDetail="true" />
+                <h3>Maximum size: 16 MB</h3>
             </h:form>
         </div>
 
