@@ -65,10 +65,13 @@ public class DashboardController {
 
     List<AuditData> selectedAuditDataList;
 
+    List<AuditData> filteredAuditDataList;
+
     List<PluginData> pluginDataList;
 
     List<PluginData> selectedPluginDataList;
 
+    List<PluginData> filteredPluginDataList;
 
     @PostConstruct
     private void postConstruct(){

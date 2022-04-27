@@ -13,31 +13,35 @@
         <div>
             <h:form>
                 <div class="card">
-                    <p:dataTable var="data" value="#{dashboardController.pluginDataList}" showGridlines="true">
+                    <p:dataTable widgetVar="pluginDataList"
+                            var="data" value="#{dashboardController.pluginDataList}"
+                                 filteredValue="#{dashboardController.filteredPluginDataList}"
+                                 showGridlines="true">
                         <p:column headerText="Id" width="5%">
                             <h:outputText value="#{data.id}" align="right"/>
                         </p:column>
 
-                        <p:column headerText="Version" width="5%">
+                        <p:column headerText="Version" width="5%" sortBy="#{data.version}" filterBy="#{data.version}">
                             <h:outputText value="#{data.version}" />
                         </p:column>
 
-                        <p:column headerText="Owner" width="10%">
+                        <p:column headerText="Owner" width="10%" sortBy="#{data.owner}" filterBy="#{data.owner}">
                             <h:outputText value="#{data.owner}" />
                         </p:column>
 
-                        <p:column headerText="Date" width="10%">
-                            <h:outputText value="#{data.registeredDate.toString()}" />
+                        <p:column headerText="Date" width="10%"  filterMatchMode="between">
+                            <h:outputText value="#{data.registeredDate.toString()}"></h:outputText>
+
                         </p:column>
 
-                        <p:column headerText="Prerequisites">
+                        <p:column headerText="Prerequisites" sortBy="#{data.pluginPrerequisites}" filterMatchMode ="contains" filterBy="#{data.pluginPrerequisites}">
                             <h:outputText value="#{data.pluginPrerequisites}" />
                         </p:column>
 
-                        <p:column headerText="Description">
+                        <p:column headerText="Description" sortBy="#{data.pluginDescription}" filterMatchMode ="contains" filterBy="#{data.pluginDescription}">
                             <h:outputText value="#{data.pluginDescription}" />
                         </p:column>
-                        <p:column headerText="Type" width="10%">
+                        <p:column headerText="Type" width="10%" sortBy="#{data.pluginType}" filterBy="#{data.pluginType}">
                             <h:outputText value="#{data.pluginType}" />
                         </p:column>
 
