@@ -1,14 +1,17 @@
-package ro.simavi.mescobrad.auditapp.services;
+package ro.simavi.mescobrad.auditapp.repositories;
 
-import ro.simavi.mescobrad.auditapp.entities.AuditData;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.transaction.annotation.Transactional;
 import ro.simavi.mescobrad.auditapp.entities.PluginData;
 
 import java.util.List;
 
-public interface PluginDataService {
-    List<PluginData> pluginData();
+@Transactional
+public interface PluginDataRepository extends JpaRepository<PluginData, Long>
+{
     List<PluginData> findAllByName(String name);
     List<PluginData> findAllByNameAndVersion(String name, String version);
     List<PluginData> findAllByVersion(String version);
     PluginData findFirstById(String id);
 }
+
