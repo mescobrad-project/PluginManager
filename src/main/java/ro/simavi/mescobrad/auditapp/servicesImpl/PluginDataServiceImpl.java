@@ -67,6 +67,12 @@ public class PluginDataServiceImpl implements PluginDataService
 
         return dummyList;
     }
+
+    @Override
+    public List<PluginData> findAll(){
+        return pluginDataRepository.findAll();
+    }
+
 @Override
     public List<PluginData> findAllByName(String name){
         return pluginDataRepository.findAllByName( name );

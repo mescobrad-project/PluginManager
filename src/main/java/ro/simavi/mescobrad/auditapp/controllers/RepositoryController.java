@@ -1,11 +1,13 @@
 package ro.simavi.mescobrad.auditapp.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import ro.simavi.mescobrad.auditapp.entities.PluginData;
+import ro.simavi.mescobrad.auditapp.services.PluginDataService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,12 +15,14 @@ import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
 public class RepositoryController {
+    @Autowired
+    PluginDataService pluginDataService;
 
     @GetMapping("/repository")
     public List<PluginData> registry(@RequestParam(value = "name", defaultValue = "edge") String name,
             @RequestParam(value = "version", defaultValue = "1.0.1") String version) {
         List<PluginData> lpd = new ArrayList<>();
-        lpd.add(  new PluginData(name));
+        lpd.addAll(  pluginDataService.findAll());
         return lpd;
     }
 

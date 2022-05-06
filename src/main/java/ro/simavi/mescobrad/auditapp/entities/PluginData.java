@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@Table(name = "plugin_data")
+@Table(name = "plugin_data", catalog = "mescobrad", schema = "mescobrad_dl")
 @Entity(name = "PluginData")
 public class PluginData
 {

@@ -77,7 +77,7 @@ public class DashboardController {
     private void postConstruct(){
 
         auditDataList = auditDataService.auditData();
-        pluginDataList = pluginDataService.pluginData();
+        pluginDataList = pluginDataService.findAll();
     }
 
     public boolean isRendered(String place){
