@@ -80,12 +80,7 @@ public class PluginDataServiceImpl implements PluginDataService
 
     @Override
     public List<PluginData> findAllByNameAndVersion(String name, String version){
-        return pluginDataRepository.findAllByNameAndVersion( name, version );
-    }
-
-    @Override
-    public List<PluginData> findAllByVersion(String version){
-        return pluginDataRepository.findAllByVersion( version );
+        return pluginDataRepository.findAllByVersionAndName( version, name );
     }
 
     @Override
@@ -93,4 +88,27 @@ public class PluginDataServiceImpl implements PluginDataService
         return pluginDataRepository.findFirstById( id );
     }
 
+    @Override
+    public List<PluginData> findAllByVersion(String version){
+        return pluginDataRepository.findAllByVersion( version );
+    }
+
+
+    @Override
+    public  List<PluginData> findAllByNameAndVersionAndType(String name, String version, String type){
+        return pluginDataRepository.findAllByVersionAndNameAndType(  version, name, type );
+    }
+
+    @Override
+    public List<PluginData> findLikeName(String name){
+        return pluginDataRepository.findLikeName( name );
+    }
+
+    @Override
+    public List<PluginData> findLikeNameVersionType(String name,
+            String version,
+            String type
+    ){
+        return pluginDataRepository.findLikeNameVersionType( name, version, type );
+    }
 }

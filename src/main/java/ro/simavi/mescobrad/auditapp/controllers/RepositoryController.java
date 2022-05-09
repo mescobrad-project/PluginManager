@@ -2,6 +2,7 @@ package ro.simavi.mescobrad.auditapp.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,7 +12,6 @@ import ro.simavi.mescobrad.auditapp.services.PluginDataService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
 public class RepositoryController {
@@ -27,11 +27,9 @@ public class RepositoryController {
     }
 
     @GetMapping("/repository/{id}")
-    public List<PluginData> listRegistered(@RequestParam(value = "name", defaultValue = "edge") String name,
-            @RequestParam(value = "version", defaultValue = "1.0.1") String version) {
-        List<PluginData> lpd = new ArrayList<>();
-        lpd.add(  new PluginData( name));
-        return lpd;
+    public PluginData listRegistered(@PathVariable String id) {
+        return  pluginDataService.findFirstById(id);
+
     }
 
     @PostMapping("/repository/upload")
