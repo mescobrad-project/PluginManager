@@ -55,7 +55,17 @@ To build the docker image, follow the steps:
 2. Be sure that under the root there is target/pluginmng-0.0.1-SNAPSHOT.jar
 3. Run the command docker build -t pluginmng . (be carefull to use dot at the end)
 4. Wait the image to be created.
-5. 
+5. Save the image >docker save pluginmng:latest > pluginmng.tar
+6. Evetualy zip the pluginmng.tar file
+7. Copy the image file to the destination server (scp, winscp, etc.
+8. I have placed the image in /home/simavi/SavedDockerImages)
+9. Delete the previous version sudo docker image rm pluginmng
+10. Load the new version sudo docker image load --input pluginmng.tar
+11. List the images sudo docker image ls 
+12. Run the container
+13. sudo docker run -p:26084:6084  --add-host=host.docker.internal:host-gateway pluginmng
+
+
 ## Running the tests
 
 Explain how to run the automated tests for this system
