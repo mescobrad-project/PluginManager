@@ -65,6 +65,11 @@ To build the docker image, follow the steps:
 12. Run the container
 13. sudo docker run -p:26084:6084  --add-host=host.docker.internal:host-gateway pluginmng
 
+## Swagger documentation
+Example:
+http://localhost:16084/pluginmng/v3/api-docs
+
+http://localhost:16084/pluginmng/v3/swagger-ui.html
 
 ## Running the tests
 
@@ -105,7 +110,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **Name Surname** - *Role* - [githubnickname](github_profile_url)
+* **Iacob Crucianu** - *Role* - [githubnickname](github_profile_url)
 
 See also the list of [contributors](contributors) who participated in this project.
 
