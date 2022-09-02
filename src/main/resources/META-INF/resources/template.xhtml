@@ -16,7 +16,7 @@
 
 <h:body>
     <pe:layout fullPage="true" widgetVar="layoutVar">
-        <pe:layoutPane  id="north-pnl" position="north" styleClassContent="north-pnl" size="45" closable="false"  collapsible="true" resizable="true" collapseSize="0" gutter="1">
+        <pe:layoutPane  id="north-pnl" position="north" styleClassContent="north-pnl" size="50" closable="false"  collapsible="true" resizable="true" collapseSize="0" gutter="1">
 <!--    <div class="card">-->
         <h:form>
             <p:growl>
@@ -26,12 +26,14 @@
                 <h:form>
                     <p:growl id="messages" showDetail="true"/>
 
-                    <p:toolbar>
-                        <p:toolbarGroup>
-                            <p:commandButton type="button" value="Repository" icon="pi pi-file" styleClass="p-mr-2" />
-                            <i class="pi pi-bars p-px-2"/>
-                            <p:commandButton type="button" value="Catalog" icon="pi pi-folder-open" styleClass="ui-button-success" />
+                    <p:toolbar style="height: 53px">
+                        <p:toolbarGroup style="position: relative;bottom: 10px">
+                            <p:graphicImage name="images/logo_MesCoBraD-small-white.png"/>
+                        </p:toolbarGroup>
 
+
+                        <p:toolbarGroup align="right" style="position: relative;bottom: 10px">
+                            <p:commandButton value="Login" icon="pi pi-fw pi-sign-in" styleClass="ui-button-info"/>
                         </p:toolbarGroup>
                     </p:toolbar>
                 </h:form>
@@ -55,22 +57,34 @@
                                 icon="fa fa-star"
                                 rendered="#{dashboardController.isRendered('DashboardAll')}"
                                 outcome="/pages/dashboard.xhtml"
-
-
                     />
-                    <p:menuitem style="font-weight: bold;display: flex;"
-                                value="Repository" id="events"
 
+                    <p:menuitem style="font-weight: bold"
+                                value="Categories" id="categories"
                                 icon="fa fa-star"
                                 rendered="#{dashboardController.isRendered('DashboardSerttings')}"
-                                outcome="/pages/pluginrepository.xhtml"
+                                outcome="/pages/categories.xhtml"
                     />
-                    <p:menuitem style="font-weight: bold;display: flex;"
-                                value="Catalog" id="usersdata"
 
+                    <p:menuitem style="font-weight: bold"
+                                value="Questionnaire" id="questionnaireAndQuestions"
                                 icon="fa fa-star"
                                 rendered="#{dashboardController.isRendered('DashboardSerttings')}"
-                                outcome="/pages/plugincatalog.xhtml"
+                                outcome="/pages/questionnaireAndQuestions.xhtml"
+                    />
+
+                    <p:menuitem style="font-weight: bold"
+                                value="Variables" id="variables"
+                                icon="fa fa-star"
+                                rendered="#{dashboardController.isRendered('DashboardSerttings')}"
+                                outcome="/pages/variables.xhtml"
+                    />
+
+                    <p:menuitem style="font-weight: bold"
+                                value="Translations" id="translations"
+                                icon="fa fa-star"
+                                rendered="#{dashboardController.isRendered('DashboardSerttings')}"
+                                outcome="/pages/translations.xhtml"
                     />
                 </p:submenu>
                 <p:submenu label="Options">
@@ -94,7 +108,7 @@
         <div class="footer">
             MES-CoBraD
             <h:outputText id="build-info" value="#{applicationBuildInfo.getVersion()} - #{applicationBuildInfo.getNumber()} - #{applicationBuildInfo.getTime()} | "/>
-            <h:outputLink styleClass="home-link" value="/auditapp/index.xhtml"><i class="pi pi-home"></i><span style="margin-left: 0.3%">Home</span></h:outputLink>
+            <h:outputLink styleClass="home-link" value="/pluginmng/index.xhtml"><i class="pi pi-home"></i><span style="margin-left: 0.3%">Home</span></h:outputLink>
         </div>
     </pe:layoutPane>
 </pe:layout>

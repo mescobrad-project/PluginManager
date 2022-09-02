@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="../template.xhtml">
+    <ui:define name="content-center">
+        <h2 style="text-align: center">Categories</h2>
+        <div>
+            <h:form id="form">
+                <p:growl id="msgs" showDetail="true"/>
+
+                <div class="card">
+                    <p:treeTable id="tree" value="#{categoriesController.root}" editable="true" var="category"
+                                 selectionMode="single"
+                                 selection="#{categoriesController.selectedNode}">
+
+                        <p:ajax event="rowEdit" listener="#{categoriesController.onRowEdit}" update=":form:msgs"/>
+                        <p:ajax event="rowEditCancel" listener="#{categoriesController.onRowCancel}" update=":form:msgs"/>
+
+
+                        <p:column >
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{category.categoryName}"/></f:facet>
+                                <f:facet name="input"><p:inputText value="#{category.categoryName}" style="width:100%"/></f:facet>
+                            </p:cellEditor>
+
+                        </p:column>
+
+                        <p:column style="width:6rem">
+                            <p:rowEditor/>
+                        </p:column>
+
+                    </p:treeTable>
+                </div>
+
+
+                    <p:contextMenu for="tree">
+                        <p:menuitem value="Add Category"
+                                    icon="pi pi-save" oncomplete="PF('categoryDialog').show()"/>
+                        <p:menuitem value="Delete" action="#{categoriesController.deleteNode}" update="tree"
+                                    icon="pi pi-times"/>
+                    </p:contextMenu>
+
+                <p:dialog id="dialog" header="Add Category" showEffect="fade" widgetVar="categoryDialog"
+                          resizable="false" width="400" for="tree" >
+                    <br></br>
+                    <span class="ui-float-label" >
+                        <p:inputText id="inputName" value="#{categoriesController.category.categoryName}"
+                                     style="width: 300px"/>
+                        <h:outputLabel for="inputName" value="Category Name"/>
+                    </span>
+                    <br></br>
+                    <p:commandButton value="Save" update="tree"  oncomplete="PF('categoryDialog').hide()"
+                                     action="#{categoriesController.saveCategory()}" />
+                </p:dialog>
+
+            </h:form>
+        </div>
+        <p:separator style="width: 5px;"/>
+
+    </ui:define>
+</ui:composition>
+
+</html>

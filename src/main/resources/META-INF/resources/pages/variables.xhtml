@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en-us"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="../template.xhtml">
+    <ui:define name="content-center">
+        <h2 style="text-align: center">Variables</h2>
+        <h:form id="variablesForm">
+            <div class="card">
+                <p:dataTable id="variablesData" widgetVar="variablesList" var="variable"
+                             value="#{variableController.variableList}"
+                             selection="#{variableController.variableSelected}"
+                             showGridlines="true"  rowKey="#{variable.variableId}" rowSelectMode="add"
+                             style="table-layout: fixed;word-wrap: break-word;" >
+
+                    <p:column headerText="Variable Id" width="6%">
+                        <h:outputText value="#{variable.variableId}" align="right"/>
+                    </p:column>
+
+                    <p:column headerText="Variable Name" width="15%">
+                        <h:outputText value="#{variable.variableName}" />
+                    </p:column>
+
+                    <p:column headerText="Concept" width="6%">
+                        <h:outputText value="#{variable.conceptRef}" />
+                    </p:column>
+
+                    <p:column headerText="Category" width="8%" >
+                        <h:outputText value="#{variable.categoryRef}" />
+                    </p:column>
+
+                    <p:column headerText="Level Of Measurement" width="10%" >
+                        <h:outputText value="#{variable.levelOfMeasurement}" />
+                    </p:column>
+
+                    <p:column headerText="Data Type" width="7%" >
+                        <h:outputText value="#{variable.sqlDataType}" />
+                    </p:column>
+
+                    <p:column headerText="Measurement Unit" width="10%" >
+                        <h:outputText value="#{variable.measurementUnit}" />
+                    </p:column>
+
+                    <p:column headerText="Directly Measured" width="10%" >
+                        <h:outputText value="#{variable.directlyMeasured}" />
+                    </p:column>
+
+                    <p:column headerText="Formula" width="10%" >
+                        <h:outputText value="#{variable.formula}" />
+                    </p:column>
+
+                    <p:column headerText="No Of Possible Answers" width="8%" >
+                        <h:outputText value="#{variable.noOfPossibleAnswers}" />
+                    </p:column>
+
+                    <p:column headerText="Actions" width="10%" >
+                        <p:commandButton icon="pi pi-pencil" update=":dialogsVariable:manage-variables-content"
+                                         oncomplete="PF('manageVariables').show()"
+                                         styleClass="edit-button rounded-button ui-button-success">
+                            <f:setPropertyActionListener value="#{variable}"
+                                                         target="#{variableController.variableSelected}" />
+                        </p:commandButton>
+
+                        <p:commandButton class="ui-button-warning rounded-button"
+                                         oncomplete="PF('deleteVariablesDialog').show()"
+                                         icon="pi pi-trash">
+                            <f:setPropertyActionListener value="#{variable}"
+                                                         target="#{variableController.variableSelected}" />
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+            </div>
+        </h:form>
+
+        <h:form id="dialogsVariable">
+            <p:dialog header="Variable" showEffect="fade" widgetVar="manageVariables"
+                      responsive="true">
+                <p:scrollPanel style="width: 500px;height: 500px">
+                <p:outputPanel id="manage-variables-content" class="ui-fluid">
+                    <p:outputPanel rendered="#{not empty variableController.variableSelected}">
+                        <div class="field">
+                            <p:outputLabel for="variableName">Variable Name</p:outputLabel>
+                            <p:inputText id="variableName"
+                                         value="#{variableController.variableSelected.variableName}" />
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="conceptRef">Concept</p:outputLabel>
+                            <p:inputText id="conceptRef"
+                                         value="#{variableController.variableSelected.conceptRef}" />
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="categoryRef">Category</p:outputLabel>
+                            <p:inputText id="categoryRef"
+                                         value="#{variableController.variableSelected.categoryRef}" />
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="levelOfMeasurement">Level Of Measurement</p:outputLabel>
+                            <p:inputText id="levelOfMeasurement"
+                                         value="#{variableController.variableSelected.levelOfMeasurement}" />
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="sqlDataType">Data Type</p:outputLabel>
+                            <p:inputText id="sqlDataType"
+                                         value="#{variableController.variableSelected.sqlDataType}" />
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="measurementUnit">Measurement Unit</p:outputLabel>
+                            <p:inputText id="measurementUnit"
+                                         value="#{variableController.variableSelected.measurementUnit}" />
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="directlyMeasured">Directly Measured</p:outputLabel>
+                            <p:inputText id="directlyMeasured"
+                                         value="#{variableController.variableSelected.directlyMeasured}" />
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="formula">Formula</p:outputLabel>
+                            <p:inputText id="formula"
+                                         value="#{variableController.variableSelected.formula}" />
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="noOfPossibleAnswers">No Of Possible Answers</p:outputLabel>
+                            <p:inputText id="noOfPossibleAnswers"
+                                         value="#{variableController.variableSelected.noOfPossibleAnswers}" />
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="description">Description</p:outputLabel>
+                            <p:inputText id="description"
+                                         value="#{variableController.variableSelected.description}" />
+                        </div>
+                    </p:outputPanel>
+                </p:outputPanel>
+                </p:scrollPanel>
+                <f:facet name="footer">
+                    <p:commandButton value="Save" icon="pi pi-check"
+                                     actionListener="#{variableController.saveVariable}"
+                                     update="manage-variables-content"/>
+                    <p:commandButton value="Cancel" icon="pi pi-times" onclick="PF('manageVariables').hide()"
+                                     class="ui-button-secondary" type="button" />
+                </f:facet>
+            </p:dialog>
+
+
+            <p:confirmDialog widgetVar="deleteVariablesDialog" showEffect="fade" width="300"
+                             message="Delete the variable?" header="Confirm" severity="warn" appendTo="@(body)" >
+                <p:commandButton value="Yes" icon="pi pi-check"
+                                 actionListener="#{variableController.deleteVariable}"
+                                 oncomplete="PF('deleteVariablesDialog').hide()" />
+                <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                 onclick="PF('deleteVariablesDialog').hide()" />
+            </p:confirmDialog>
+
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:commandButton value="New Variable" icon="pi pi-plus"
+                                     actionListener="#{variableController.openNewVariable}"
+                                     update=":dialogsVariable:manage-variables-content"
+                                     oncomplete="PF('manageVariables').show()"
+                                     styleClass="ui-button-success" style="margin-right: .5rem">
+                        <p:resetInput target=":dialogsVariable:manage-variables-content" />
+                    </p:commandButton>
+                </p:toolbarGroup>
+            </p:toolbar>
+
+        </h:form>
+
+        <h2 style="text-align: center">Questions Variables</h2>
+        <h:form id="formQV">
+            <div class="card">
+                <p:dataTable id="dataQV" widgetVar="listQV"
+                             selection="#{variableController.selectedQV}"
+                             var="qv" value="#{variableController.listQV}"
+                             showGridlines="true" rowKey="#{qv.idQV}" rowSelectMode="add">
+                    <p:column headerText="Question Variables Id" width="25%">
+                        <h:outputText value="#{qv.idQV}" align="right"/>
+                    </p:column>
+
+                    <p:column headerText="Question Id" width="25%">
+                        <h:outputText value="#{qv.questionId}" />
+                    </p:column>
+
+                    <p:column headerText="Variable Id" width="25%">
+                        <h:outputText value="#{qv.variableId}" />
+                    </p:column>
+
+                    <p:column headerText="Actions" width="25%" >
+                        <p:commandButton icon="pi pi-pencil" update=":dialogsQV:manage-qv-content"
+                                         oncomplete="PF('manageQV').show()"
+                                         styleClass="edit-button rounded-button ui-button-success">
+                            <f:setPropertyActionListener value="#{qv}"
+                                                         target="#{variableController.selectedQV}" />
+                        </p:commandButton>
+
+                        <p:commandButton class="ui-button-warning rounded-button"
+                                         oncomplete="PF('deleteQVDialog').show()"
+                                         icon="pi pi-trash">
+                            <f:setPropertyActionListener value="#{qv}"
+                                                         target="#{variableController.selectedQV}" />
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+            </div>
+        </h:form>
+
+        <h:form id="dialogsQV">
+            <p:dialog header="Question Variable" showEffect="fade" widgetVar="manageQV"
+                      responsive="true" >
+                <p:outputPanel id="manage-qv-content" class="ui-fluid">
+                    <p:outputPanel rendered="#{not empty variableController.selectedQV}">
+                        <div class="field">
+                            <p:outputLabel for="questionId">Question Id</p:outputLabel>
+                            <p:inputText id="questionId"
+                                             value="#{variableController.selectedQV.questionId}" />
+                        </div>
+
+                        <div class="field">
+                            <p:outputLabel for="variableId">Variable Id</p:outputLabel>
+                            <p:inputText id="variableId"
+                                             value="#{variableController.selectedQV.variableId}" />
+                        </div>
+                    </p:outputPanel>
+                </p:outputPanel>
+
+                <f:facet name="footer">
+                    <p:commandButton value="Save" icon="pi pi-check"
+                                     actionListener="#{variableController.saveQV}"
+                                     update="manage-qv-content"/>
+                    <p:commandButton value="Cancel" icon="pi pi-times" onclick="PF('manageQV').hide()"
+                                     class="ui-button-secondary" type="button" />
+                </f:facet>
+            </p:dialog>
+
+
+            <p:confirmDialog widgetVar="deleteQVDialog" showEffect="fade" width="300"
+                             message="Delete the relationship between question and variable?" header="Confirm" severity="warn" appendTo="@(body)" >
+                <p:commandButton value="Yes" icon="pi pi-check"
+                                 actionListener="#{variableController.deleteQV}"
+                                 oncomplete="PF('deleteQVDialog').hide()" />
+                <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                 onclick="PF('deleteQVDialog').hide()" />
+            </p:confirmDialog>
+
+
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:commandButton value="New Question Variable" icon="pi pi-plus"
+                                     actionListener="#{variableController.openNewQV}"
+                                     update=":dialogsQV:manage-qv-content"
+                                     oncomplete="PF('manageQV').show()"
+                                     styleClass="ui-button-success" style="margin-right: .5rem">
+                        <p:resetInput target=":dialogsQV:manage-qv-content" />
+                    </p:commandButton>
+                </p:toolbarGroup>
+            </p:toolbar>
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en-us"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="../template.xhtml">
+    <ui:define name="content-center">
+        <h2 style="text-align: center">Translations</h2>
+        <h:form id="translationsForm">
+            <div class="card">
+                <p:dataTable id="translationsData" widgetVar="translationsList" var="translation"
+                             value="#{translationController.translationsList}"
+                             selection="#{translationController.translationSelected}"
+                             showGridlines="true"  rowKey="#{translation.translationId}" rowSelectMode="add">
+                    <p:column headerText="Translation Id" width="10%">
+                        <h:outputText value="#{translation.translationId}" align="right"/>
+                    </p:column>
+
+                    <p:column headerText="Question Text" width="50%">
+                        <h:outputText value="#{translation.translationQuestionText}" />
+                    </p:column>
+
+                    <p:column headerText="Language" width="20%">
+                        <h:outputText value="#{translation.refLang}" />
+                    </p:column>
+
+                    <p:column headerText="Actions" width="20%" >
+                        <p:commandButton icon="pi pi-pencil" update=":dialogsTranslations:manage-translations-content"
+                                         oncomplete="PF('manageTranslations').show()"
+                                         styleClass="edit-button rounded-button ui-button-success">
+                            <f:setPropertyActionListener value="#{translation}"
+                                                         target="#{translationController.translationSelected}" />
+                        </p:commandButton>
+
+                        <p:commandButton class="ui-button-warning rounded-button"
+                                         oncomplete="PF('deleteTranslationsDialog').show()"
+                                         icon="pi pi-trash">
+                            <f:setPropertyActionListener value="#{translation}"
+                                                         target="#{translationController.translationSelected}" />
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+            </div>
+        </h:form>
+
+        <h:form id="dialogsTranslations">
+            <p:dialog header="Translation" showEffect="fade" widgetVar="manageTranslations"
+                      responsive="true" >
+                <p:outputPanel id="manage-translations-content" class="ui-fluid">
+                    <p:outputPanel rendered="#{not empty translationController.translationSelected}">
+                        <div class="field">
+                            <p:outputLabel for="translationQuestionText">Question Text</p:outputLabel>
+                            <p:inputTextarea id="translationQuestionText"
+                                         value="#{translationController.translationSelected.translationQuestionText}" />
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="refLang">Language</p:outputLabel>
+                            <p:inputText id="refLang"
+                                         value="#{translationController.translationSelected.refLang}" />
+                        </div>
+                    </p:outputPanel>
+                </p:outputPanel>
+
+                <f:facet name="footer">
+                    <p:commandButton value="Save" icon="pi pi-check"
+                                     actionListener="#{translationController.saveTranslation}"
+                                     update="manage-translations-content"/>
+                    <p:commandButton value="Cancel" icon="pi pi-times" onclick="PF('manageTranslations').hide()"
+                                     class="ui-button-secondary" type="button" />
+                </f:facet>
+            </p:dialog>
+
+            <p:confirmDialog widgetVar="deleteTranslationsDialog" showEffect="fade" width="300"
+                             message="Delete the translation?" header="Confirm" severity="warn" appendTo="@(body)" >
+                <p:commandButton value="Yes" icon="pi pi-check"
+                                 actionListener="#{translationController.deleteTranslation}"
+                                 oncomplete="PF('deleteTranslationsDialog').hide()" />
+                <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                 onclick="PF('deleteTranslationsDialog').hide()" />
+            </p:confirmDialog>
+
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:commandButton value="New Translation" icon="pi pi-plus"
+                                     actionListener="#{translationController.openNewTranslation}"
+                                     update=":dialogsTranslations:manage-translations-content"
+                                     oncomplete="PF('manageTranslations').show()"
+                                     styleClass="ui-button-success" style="margin-right: .5rem">
+                        <p:resetInput target=":dialogsTranslations:manage-translations-content" />
+                    </p:commandButton>
+                </p:toolbarGroup>
+            </p:toolbar>
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+</html>

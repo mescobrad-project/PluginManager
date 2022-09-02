@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en-us"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="../template.xhtml">
+    <ui:define name="content-center">
+        <h2 style="text-align: center">Questionnaire</h2>
+        <h:form id="questionnaireForm">
+            <div class="card">
+                <p:dataTable id="questionnaireData" widgetVar="questionnaireList" var="questionnaire"
+                             value="#{questionnaireQuestionController.questionnaireList}"
+                             selection="#{questionnaireQuestionController.questionnaireSelected}"
+                             showGridlines="true"  rowKey="#{questionnaire.questionnaireId}" rowSelectMode="add">
+                    <p:column headerText="Questionnaire Id" width="10%">
+                        <h:outputText value="#{questionnaire.questionnaireId}" align="right"/>
+                    </p:column>
+
+                    <p:column headerText="Questionnaire Name" width="25%">
+                        <h:outputText value="#{questionnaire.questionnaireName}" />
+                    </p:column>
+
+                    <p:column headerText="Respondent Type" width="20%">
+                        <h:outputText value="#{questionnaire.respondentType}" />
+                    </p:column>
+
+                    <p:column headerText="Questionnaire Type" width="15%">
+                        <h:outputText value="#{questionnaire.questionnaireType}" />
+                    </p:column>
+
+                    <p:column headerText="Date" width="20%" >
+                        <h:outputText value="#{questionnaire.creationDateTime}" />
+                    </p:column>
+
+                    <p:column headerText="Actions" width="10%" >
+                        <p:commandButton icon="pi pi-pencil" update=":dialogs:manage-questionnaire-content"
+                                         oncomplete="PF('manageQuestionnaire').show()"
+                                         styleClass="edit-button rounded-button ui-button-success">
+                            <f:setPropertyActionListener value="#{questionnaire}"
+                                                         target="#{questionnaireQuestionController.questionnaireSelected}" />
+                        </p:commandButton>
+
+                        <p:commandButton class="ui-button-warning rounded-button"
+                                         oncomplete="PF('deleteQuestionnaireDialog').show()"
+                                         icon="pi pi-trash">
+                            <f:setPropertyActionListener value="#{questionnaire}"
+                                                         target="#{questionnaireQuestionController.questionnaireSelected}" />
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+            </div>
+        </h:form>
+
+        <h:form id="dialogs">
+            <p:dialog header="Questionnaire" showEffect="fade" widgetVar="manageQuestionnaire"
+                      responsive="true" >
+                <p:outputPanel id="manage-questionnaire-content" class="ui-fluid">
+                    <p:outputPanel rendered="#{not empty questionnaireQuestionController.questionnaireSelected}">
+                        <div class="field">
+                            <p:outputLabel for="questionnaireName">Questionnaire Name</p:outputLabel>
+                            <p:inputText id="questionnaireName"
+                                         value="#{questionnaireQuestionController.questionnaireSelected.questionnaireName}" />
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="respondentType">Respondent Type</p:outputLabel>
+                            <p:inputText id="respondentType"
+                                         value="#{questionnaireQuestionController.questionnaireSelected.respondentType}" />
+                        </div>
+                        <div class="field">
+                            <p:outputLabel for="questionnaireType">Questionnaire Type</p:outputLabel>
+                            <p:inputText id="questionnaireType"
+                                             value="#{questionnaireQuestionController.questionnaireSelected.questionnaireType}" />
+                        </div>
+                    </p:outputPanel>
+                </p:outputPanel>
+
+                <f:facet name="footer">
+                    <p:commandButton value="Save" icon="pi pi-check"
+                                     actionListener="#{questionnaireQuestionController.saveQuestionnaire}"
+                                     update="manage-questionnaire-content"/>
+                    <p:commandButton value="Cancel" icon="pi pi-times" onclick="PF('manageQuestionnaire').hide()"
+                                     class="ui-button-secondary" type="button" />
+                </f:facet>
+            </p:dialog>
+
+
+            <p:confirmDialog widgetVar="deleteQuestionnaireDialog" showEffect="fade" width="300"
+                             message="Delete the questionnaire?" header="Confirm" severity="warn" appendTo="@(body)" >
+                <p:commandButton value="Yes" icon="pi pi-check"
+                                 actionListener="#{questionnaireQuestionController.deleteQuestionnaire}"
+                                  oncomplete="PF('deleteQuestionnaireDialog').hide()" />
+                <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                 onclick="PF('deleteQuestionnaireDialog').hide()" />
+            </p:confirmDialog>
+
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:commandButton value="New Questionnaire" icon="pi pi-plus"
+                                     actionListener="#{questionnaireQuestionController.openNewQuestionnaire}"
+                                     update=":dialogs:manage-questionnaire-content"
+                                      oncomplete="PF('manageQuestionnaire').show()"
+                                     styleClass="ui-button-success" style="margin-right: .5rem">
+                        <p:resetInput target=":dialogs:manage-questionnaire-content" />
+                    </p:commandButton>
+                </p:toolbarGroup>
+            </p:toolbar>
+
+        </h:form>
+
+        <h2 style="text-align: center">Questions</h2>
+        <h:form id="questionForm">
+            <div class="card">
+                <p:dataTable id="questionsData" widgetVar="questionsList"
+                             selection="#{questionnaireQuestionController.questionSelected}"
+                             var="question" value="#{questionnaireQuestionController.questionsList}"
+                             showGridlines="true" rowKey="#{question.questionId}" rowSelectMode="add">
+                    <p:column headerText="Question Id" width="10%">
+                        <h:outputText value="#{question.questionId}" align="right"/>
+                    </p:column>
+
+                    <p:column headerText="Question Text" width="70%">
+                        <h:outputText value="#{question.questionText}" />
+                    </p:column>
+
+                    <p:column headerText="Actions" width="20%" >
+                        <p:commandButton icon="pi pi-pencil" update=":dialogsQuestions:manage-question-content"
+                                         oncomplete="PF('manageQuestion').show()"
+                                         styleClass="edit-button rounded-button ui-button-success">
+                            <f:setPropertyActionListener value="#{question}"
+                                                         target="#{questionnaireQuestionController.questionSelected}" />
+                        </p:commandButton>
+
+                        <p:commandButton class="ui-button-warning rounded-button"
+                                         oncomplete="PF('deleteQuestionDialog').show()"
+                                         icon="pi pi-trash">
+                            <f:setPropertyActionListener value="#{question}"
+                                                         target="#{questionnaireQuestionController.questionSelected}" />
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+            </div>
+        </h:form>
+
+        <h:form id="dialogsQuestions">
+            <p:dialog header="Question" showEffect="fade" widgetVar="manageQuestion"
+                      responsive="true" >
+                <p:outputPanel id="manage-question-content" class="ui-fluid">
+                    <p:outputPanel rendered="#{not empty questionnaireQuestionController.questionSelected}">
+                        <div class="field">
+                            <p:outputLabel for="questionText">Question Text</p:outputLabel>
+                            <p:inputTextarea id="questionText"
+                                         value="#{questionnaireQuestionController.questionSelected.questionText}" />
+                        </div>
+                    </p:outputPanel>
+                </p:outputPanel>
+
+                <f:facet name="footer">
+                    <p:commandButton value="Save" icon="pi pi-check"
+                                     actionListener="#{questionnaireQuestionController.saveQuestion}"
+                                     update="manage-question-content"/>
+                    <p:commandButton value="Cancel" icon="pi pi-times" onclick="PF('manageQuestion').hide()"
+                                     class="ui-button-secondary" type="button" />
+                </f:facet>
+            </p:dialog>
+
+
+            <p:confirmDialog widgetVar="deleteQuestionDialog" showEffect="fade" width="300"
+                             message="Delete the question?" header="Confirm" severity="warn" appendTo="@(body)" >
+                <p:commandButton value="Yes" icon="pi pi-check"
+                                 actionListener="#{questionnaireQuestionController.deleteQuestion}"
+                                 oncomplete="PF('deleteQuestionDialog').hide()" />
+                <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                 onclick="PF('deleteQuestionDialog').hide()" />
+            </p:confirmDialog>
+
+
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:commandButton value="New Question" icon="pi pi-plus"
+                                     actionListener="#{questionnaireQuestionController.openNewQuestion}"
+                                     update=":dialogsQuestions:manage-question-content"
+                                     oncomplete="PF('manageQuestion').show()"
+                                     styleClass="ui-button-success" style="margin-right: .5rem">
+                        <p:resetInput target=":dialogsQuestions:manage-question-content" />
+                    </p:commandButton>
+                </p:toolbarGroup>
+            </p:toolbar>
+
+        </h:form>
+
+        <h2 style="text-align: center">Questionnaire Questions</h2>
+        <h:form id="formQQ">
+            <div class="card">
+                <p:dataTable id="dataQQ" widgetVar="qqList"
+                             selection="#{questionnaireQuestionController.selectedQQ}"
+                             var="qq" value="#{questionnaireQuestionController.qqList}"
+                             showGridlines="true" rowKey="#{qq.qqId}" rowSelectMode="add">
+                    <p:column headerText="QQ Id" width="20%">
+                        <h:outputText value="#{qq.qqId}" align="right"/>
+                    </p:column>
+
+                    <p:column headerText="Questionnaire Id" width="30%">
+                        <h:outputText value="#{qq.qqQuestionnaireId}" />
+                    </p:column>
+
+                    <p:column headerText="Question Id" width="30%">
+                        <h:outputText value="#{qq.qqQuestionId}" />
+                    </p:column>
+
+                    <p:column headerText="Actions" width="20%" >
+                        <p:commandButton icon="pi pi-pencil" update=":dialogsQQ:manage-qq-content"
+                                         oncomplete="PF('manageQQ').show()"
+                                         styleClass="edit-button rounded-button ui-button-success">
+                            <f:setPropertyActionListener value="#{qq}"
+                                                         target="#{questionnaireQuestionController.selectedQQ}" />
+                        </p:commandButton>
+
+                        <p:commandButton class="ui-button-warning rounded-button"
+                                         oncomplete="PF('deleteQQDialog').show()"
+                                         icon="pi pi-trash">
+                            <f:setPropertyActionListener value="#{qq}"
+                                                         target="#{questionnaireQuestionController.selectedQQ}" />
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+            </div>
+        </h:form>
+
+        <h:form id="dialogsQQ">
+            <p:dialog header="Questionnaire Question" showEffect="fade" widgetVar="manageQQ"
+                      responsive="true" >
+                <p:outputPanel id="manage-qq-content" class="ui-fluid">
+                    <p:outputPanel rendered="#{not empty questionnaireQuestionController.selectedQQ}">
+                        <div class="field">
+                            <p:outputLabel for="idQuestionnaire">Questionnaire Id</p:outputLabel>
+                            <p:inputText id="idQuestionnaire"
+                                             value="#{questionnaireQuestionController.selectedQQ.qqQuestionnaireId}" />
+                        </div>
+
+                        <div class="field">
+                            <p:outputLabel for="idQuestion">Question Id</p:outputLabel>
+                            <p:inputText id="idQuestion"
+                                             value="#{questionnaireQuestionController.selectedQQ.qqQuestionId}" />
+                        </div>
+                    </p:outputPanel>
+                </p:outputPanel>
+
+                <f:facet name="footer">
+                    <p:commandButton value="Save" icon="pi pi-check"
+                                     actionListener="#{questionnaireQuestionController.saveQQ}"
+                                     update="manage-qq-content"/>
+                    <p:commandButton value="Cancel" icon="pi pi-times" onclick="PF('manageQQ').hide()"
+                                     class="ui-button-secondary" type="button" />
+                </f:facet>
+            </p:dialog>
+
+
+            <p:confirmDialog widgetVar="deleteQQDialog" showEffect="fade" width="300"
+                             message="Delete the relationship between questionnaire and question?" header="Confirm"
+                             severity="warn" appendTo="@(body)" >
+                <p:commandButton value="Yes" icon="pi pi-check"
+                                 actionListener="#{questionnaireQuestionController.deleteQQ}"
+                                 oncomplete="PF('deleteQQDialog').hide()" />
+                <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                 onclick="PF('deleteQQDialog').hide()" />
+            </p:confirmDialog>
+
+
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:commandButton value="New Questionnaire Question" icon="pi pi-plus"
+                                     actionListener="#{questionnaireQuestionController.openNewQQ}"
+                                     update=":dialogsQQ:manage-qq-content"
+                                     oncomplete="PF('manageQQ').show()"
+                                     styleClass="ui-button-success" style="margin-right: .5rem">
+                        <p:resetInput target=":dialogsQQ:manage-qq-content" />
+                    </p:commandButton>
+                </p:toolbarGroup>
+            </p:toolbar>
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+</html>
